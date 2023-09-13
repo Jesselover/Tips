@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- todo -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" />
+    <script>
+      /**
+       * 防抖：用户触发事件过于频繁，只执行最后一次
+       */
+      let input = document.querySelector("input");
+      let t = null;
+      // input.oninput = function () {
+      //   if (t !== null) {
+      //     clearTimeout(t);
+      //   }
+      //   t = setTimeout(() => {
+      //     console.log(this.value);
+      //     console.log(this, "this"); //input
+      //   }, 500);
+      // };
+
+      input.oninput = debounce(function () {
+        console.log(this);
+      }, 500);
+
+      // 防抖的封装
+      function debounce(fn, delay) {
+        let t = null;
+        return function () {
+          if (t !== null) {
+            clearTimeout(t);
+          }
+          t = setTimeout(() => {
+            //todo 这里的this指向window，需要更改
+            fn.call(this);
+          }, delay);
+        };
+      }
+    </script>
+  </body>
+</html>

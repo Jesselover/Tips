@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #box {
+      width: 300px;
+      height: 300px;
+      border: 2px solid salmon;
+    }
+  </style>
+  <body>
+    <a id="btn">下载</a>
+    <input type="file" id="input" />
+    <div id="box"></div>
+    <script>
+      var str = `<div><p>123</p></div>`;
+      var blob = new Blob([str], {
+        type: "text/html",
+      });
+      console.log(blob, "blob");
+      btn.onclick = function (e) {
+        this.setAttribute("download", "123.html");
+        this.href = URL.createObjectURL(blob);
+      };
+      input.onchange = function (e) {
+        var file = e.target.files[0];
+        // console.log(file, "file");
+        var img = new Image();
+        var fileRead = new FileReader();
+        // 异步方法
+        fileRead.onload = function () {
+          img.src = fileRead.result;
+        };
+        fileRead.readAsDataURL(file);
+        // console.log(file);
+        document.body.appendChild(img);
+      };
+      box.ondragover = function (e) {
+        e.preventDefault();
+      };
+      /* 将传入图片转为base64 */
+      box.ondrop = function (e) {
+        e.preventDefault();
+        var file = e.dataTransfer.files[0];
+        var reader = new FileReader();
+        var base64Str = reader.readAsDataURL(file);
+        var img = new Image();
+
+        reader.onload = function (event) {
+          console.log(event.target.result); // 输出传入图片的base64
+          img.src = event.target.result;
+        };
+        document.body.appendChild(img);
+      };
+    </script>
+  </body>
+</html>

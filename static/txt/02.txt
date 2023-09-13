@@ -1,0 +1,1 @@
+这是fs.writeFileSync写入内容

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      /**
+       * 节流：控制执行次数。
+       * eg：滚动条、交互数据
+       */
+
+      // let flag = true;
+      // window.onscroll = function () {
+      //   if (flag) {
+      //     setTimeout(() => {
+      //       console.log("我被触发了");
+      //     }, 500);
+      //     flag = true;
+      //   }
+      //   flag = false;
+      // };
+
+      window.onscroll = throttle(function () {
+        console.log("我被触发了");
+      }, 500);
+
+      // 封装节流
+      function throttle(fn, delay) {
+        let flag = true;
+        return function () {
+          if (flag) {
+            setTimeout(() => {
+              fn.call(this);
+              flag = true;
+            }, delay);
+          }
+          flag = false;
+        };
+      }
+    </script>
+  </body>
+</html>
